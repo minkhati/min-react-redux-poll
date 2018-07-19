@@ -126,6 +126,22 @@ function generateUID() {
   );
 }
 
+function formatQuestion({ optionOneText, optionTwoText, author }) {
+  return {
+    id: generateUID(),
+    timestamp: Date.now(),
+    author,
+    optionOne: {
+      votes: [],
+      text: optionOneText
+    },
+    optionTwo: {
+      votes: [],
+      text: optionTwoText
+    }
+  };
+}
+
 export function _getUsers() {
   return new Promise((res, rej) => {
     setTimeout(() => res({ ...users }), 1000);
