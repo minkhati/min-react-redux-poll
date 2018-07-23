@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { formatQuestion, formatDate } from '../utils/helpers';
+import { formatQuestion } from '../utils/helpers';
 
 class Question extends Component {
   render() {
@@ -12,21 +12,13 @@ class Question extends Component {
       return <p>This Question does not exist</p>;
     }
 
-    const {
-      name,
-      id,
-      timestamp,
-      optionOne,
-      optionTwo,
-      avatar,
-      authedUser,
-      optionOneAnswered,
-      optionTwoAnswered,
-      hasAnswered
-    } = question;
+    const { name, id, optionOne, avatar, hasAnswered } = question;
 
     return (
-      <Link to={`/question/${id}`} className="question">
+      <Link
+        to={hasAnswered === false ? `/question/${id}` : `/answer/${id}`}
+        className="question"
+      >
         <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
         <div className="question-info">
           <div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Question from './Question';
-import { formatQuestion, formatDate } from '../utils/helpers';
+import { formatQuestion } from '../utils/helpers';
 
 class DashBoard extends Component {
   state = {

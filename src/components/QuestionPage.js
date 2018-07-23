@@ -1,14 +1,13 @@
 import React, { Component, input } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Question from './Question';
-import { formatQuestion, formatDate } from '../utils/helpers';
+import { formatQuestion } from '../utils/helpers';
 import { handleAddQuestionAnswer } from '../actions/questions';
 
 class QuestionPage extends Component {
   state = {
     selectedOption: '',
-    toHome: false
+    toAnswer: false
   };
 
   handleSubmit = e => {
@@ -27,8 +26,8 @@ class QuestionPage extends Component {
     );
 
     this.setState(() => ({
-      selectedOption: '',
-      toHome: true
+      //selectedOption: '',
+      toAnswer: true
     }));
   };
 
@@ -40,28 +39,17 @@ class QuestionPage extends Component {
 
   render() {
     const { question } = this.props;
-    const { selectedOption, toHome } = this.state;
+    const { selectedOption, toAnswer } = this.state;
 
     if (question === null) {
       return <p>This Question does not exist</p>;
     }
 
-    if (toHome === true) {
-      return <Redirect to="/" />;
-    }
+    const { name, id, optionOne, optionTwo, avatar } = question;
 
-    const {
-      name,
-      id,
-      timestamp,
-      optionOne,
-      optionTwo,
-      avatar,
-      authedUser,
-      optionOneAnswered,
-      optionTwoAnswered,
-      hasAnswered
-    } = question;
+    if (toAnswer === true) {
+      return <Redirect to={`/answer/${id}`} />;
+    }
 
     return (
       <form className="question" onSubmit={this.handleSubmit}>

@@ -88,6 +88,16 @@ li {
   margin-left: -10px;
 }
 
+.your-vote {
+  height: 50px;
+  border-radius: 100px;
+  margin-top: 20px;
+  width: 50px;
+  background-color: yellow;
+  text-align: center;
+  color: green;
+}
+
 .question {
   width: 100%;
   max-width: 490px;

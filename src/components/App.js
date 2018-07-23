@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
 import DashBoard from './DashBoard';
 import QuestionPage from './QuestionPage';
+import AnswerPage from './AnswerPage';
 import NewQuestion from './NewQuestion';
 import LeaderBoard from './LeaderBoard';
 import Login from './Login';
@@ -29,6 +30,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={DashBoard} />
             <Route path="/question/:id" component={QuestionPage} />
+            <Route path="/answer/:id" component={AnswerPage} />
             <Route path="/new" component={NewQuestion} />
             <Route path="/leaderBoard" component={LeaderBoard} />
             <Route path="/logout" component={Logout} />
