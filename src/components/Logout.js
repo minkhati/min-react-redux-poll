@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { setAuthedUser } from '../actions/authedUser';
 
 class Logout extends Component {
+  componentWillMount() {
+    this.props.dispatch(setAuthedUser(null));
+  }
+
   render() {
-    return <div> Logout Page</div>;
+    return <Redirect to="/" />;
   }
 }
 
-export default Logout;
+export default connect()(Logout);

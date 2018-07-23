@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export default function Nav() {
+export default function Nav(props) {
+  const { name, avatarURL } = props.user;
   return (
     <nav className="nav">
       <ul>
@@ -20,6 +21,16 @@ export default function Nav() {
             Leader Board
           </NavLink>
         </li>
+        {name && <li>Hello, {name} </li>}
+        {avatarURL && (
+          <li>
+            <img
+              src={avatarURL}
+              alt={`Avatar of ${name}`}
+              className="nav-avatar"
+            />
+          </li>
+        )}
         <li>
           <NavLink to="/logout" exact activeClassName="active">
             Logout

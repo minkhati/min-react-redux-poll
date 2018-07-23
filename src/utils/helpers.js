@@ -4,18 +4,23 @@ export const formatDate = timestamp => {
   return time.substr(0, 5) + time.slice(-2) + ' | ' + d.toLocaleDateString();
 };
 
-export const formatQuestion = ({ optionOneText, optionTwoText, author }) => {
+export function formatQuestion(question, author, authedUser) {
+  const { id, optionOne, optionTwo, timestamp } = question;
+  const { name, avatarURL } = author;
+  const optionOneAnswered = optionOne.votes.includes(authedUser);
+  const optionTwoAnswered = optionTwo.votes.includes(authedUser);
+  const hasAnswered = optionOneAnswered || optionTwoAnswered;
+
   return {
-    id: generateUID(),
-    timestamp: Date.now(),
-    author,
-    optionOne: {
-      votes: [],
-      text: optionOneText
-    },
-    optionTwo: {
-      votes: [],
-      text: optionTwoText
-    }
+    name,
+    id,
+    timestamp,
+    optionOne,
+    optionTwo,
+    avatar: avatarURL,
+    authedUser,
+    optionOneAnswered,
+    optionTwoAnswered,
+    hasAnswered
   };
-};
+}

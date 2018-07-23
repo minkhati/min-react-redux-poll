@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { handleInitialData } from '../actions/shared';
-import HomePage from './HomePage';
+import DashBoard from './DashBoard';
+import QuestionPage from './QuestionPage';
 import NewQuestion from './NewQuestion';
 import LeaderBoard from './LeaderBoard';
+import Login from './Login';
 import Logout from './Logout';
 import Nav from './Nav';
 
@@ -15,21 +17,35 @@ class App extends Component {
   }
 
   render() {
+    if (!this.props.authedUser) {
+      return <Login />;
+    }
+
     return (
       <Router>
         <div className="container">
-          <Nav />
+          <Nav authedUser={this.props.authedUser} user={this.props.user} />
           <hr />
-          <div>
-            <Route path="/" exact component={HomePage} />
+          <Switch>
+            <Route path="/" exact component={DashBoard} />
+            <Route path="/question/:id" component={QuestionPage} />
             <Route path="/new" component={NewQuestion} />
-            <Route path="/leaderBoard" exact component={LeaderBoard} />
-            <Route path="/logout" exact component={Logout} />
-          </div>
+            <Route path="/leaderBoard" component={LeaderBoard} />
+            <Route path="/logout" component={Logout} />
+
+            <Route render={() => <div>Not Found!!</div>} />
+          </Switch>
         </div>
       </Router>
     );
   }
 }
 
-export default connect()(App);
+function mapStateToProps({ authedUser, users }) {
+  return {
+    authedUser,
+    user: authedUser ? users[authedUser] : null
+  };
+}
+
+export default connect(mapStateToProps)(App);
