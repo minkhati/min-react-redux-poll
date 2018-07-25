@@ -42,7 +42,7 @@ class AnswerPage extends Component {
               {optionOneAnswered === true ? (
                 <div className="your-vote">Your vote</div>
               ) : null}
-              <span style={{ marginRight: '20px' }}>{`Would you rather be ${
+              <span style={{ marginRight: '20px' }}>{`Would you rather ${
                 optionOne.text
               }?`}</span>
               <Line
@@ -60,7 +60,7 @@ class AnswerPage extends Component {
               {optionTwoAnswered === true ? (
                 <div className="your-vote">Your vote</div>
               ) : null}
-              <span style={{ marginRight: '20px' }}>{`Would you rather be ${
+              <span style={{ marginRight: '20px' }}>{`Would you rather ${
                 optionTwo.text
               }?`}</span>
               <Line

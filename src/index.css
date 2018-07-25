@@ -131,7 +131,7 @@ li {
 .div-question {
   width: 80%;
   padding: 0 20px;
-  border: 1px solid #dad7d7;
+  border-left: 1px solid #dad7d7;
   display: flex;
   flex-direction: column;
 }
@@ -139,7 +139,8 @@ li {
 .div-leaderboard {
   width: 60%;
   padding: 0 20px;
-  border: 1px solid #dad7d7;
+  border-left: 1px solid #dad7d7;
+  border-right: 1px solid #dad7d7;
   display: flex;
   flex-direction: column;
 }
