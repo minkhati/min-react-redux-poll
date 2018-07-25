@@ -129,6 +129,7 @@ li {
 }
 
 .div-question {
+<<<<<<< HEAD
   width: 80%;
   padding: 0 20px;
   border: 1px solid #dad7d7;
@@ -137,6 +138,8 @@ li {
 }
 
 .div-leaderboard {
+=======
+>>>>>>> 2a9089780fd55a800ead5a7d83c424dcdfe51d73
   width: 60%;
   padding: 0 20px;
   border: 1px solid #dad7d7;

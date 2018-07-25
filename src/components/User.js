@@ -24,7 +24,11 @@ class User extends Component {
           <div className="div-avatar">
             <img src={avatarURL} alt={`Avatar of ${name}`} className="avatar" />
           </div>
+<<<<<<< HEAD
           <div className="div-leaderboard">
+=======
+          <div className="div-question">
+>>>>>>> 2a9089780fd55a800ead5a7d83c424dcdfe51d73
             <p>Answered Questions: {totalAnswered}</p>
             <p>Created Questions: {totalQuestionCreated}</p>
           </div>
