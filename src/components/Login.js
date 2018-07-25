@@ -8,7 +8,7 @@ import logo from '../utils/logo.svg';
 class Login extends Component {
   state = {
     disabled: false,
-    selectValue: null,
+    selectValue: '',
     clearable: true,
     rtl: false
   };
@@ -27,8 +27,11 @@ class Login extends Component {
   };
 
   render() {
+    const { selectValue } = this.state;
     const { users } = this.props;
     const userIds = Object.keys(users);
+
+    const enabled = selectValue.length > 0;
 
     const options = userIds.map(id => ({
       value: users[id].id,
@@ -61,11 +64,7 @@ class Login extends Component {
             value={this.state.selectValue}
             onChange={this.updateValue}
           />
-          <button
-            className="btn"
-            type="submit"
-            disabled={this.state.selectValue === ''}
-          >
+          <button className="btn" type="submit" disabled={!enabled}>
             Submit
           </button>
         </form>
