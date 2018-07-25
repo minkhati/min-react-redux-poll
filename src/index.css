@@ -244,6 +244,7 @@ li {
   padding: 0 10px;
   height: 30px;
   align-items: center;
+  font-weight: bold;
 }
 
 .question-page-heading {
@@ -253,6 +254,7 @@ li {
   padding: 0 10px;
   height: 30px;
   align-items: center;
+  font-weight: bold;
 }
 
 .form-question {

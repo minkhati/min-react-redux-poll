@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formatQuestion } from '../utils/helpers';
-import { Line, Circle } from 'rc-progress';
+import { Line } from 'rc-progress';
 
 class AnswerPage extends Component {
   render() {

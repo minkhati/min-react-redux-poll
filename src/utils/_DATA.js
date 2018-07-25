@@ -2,7 +2,7 @@ let users = {
   sarahedo: {
     id: 'sarahedo',
     name: 'Sarah Edo',
-    avatarURL: 'https://tylermcginnis.com/would-you-rather/sarah.jpg',
+    avatarURL: 'https://randomuser.me/api/portraits/lego/1.jpg',
     answers: {
       '8xf0y6ziyjabvozdd253nd': 'optionOne',
       '6ni6ok3ym7mf1p33lnez': 'optionOne',
@@ -14,7 +14,7 @@ let users = {
   tylermcginnis: {
     id: 'tylermcginnis',
     name: 'Tyler McGinnis',
-    avatarURL: 'https://tylermcginnis.com/would-you-rather/tyler.jpg',
+    avatarURL: 'https://randomuser.me/api/portraits/lego/5.jpg',
     answers: {
       vthrdm985a262al8qx3do: 'optionOne',
       xj352vofupe1dqz9emx13r: 'optionTwo'
@@ -24,7 +24,7 @@ let users = {
   johndoe: {
     id: 'johndoe',
     name: 'John Doe',
-    avatarURL: 'https://tylermcginnis.com/would-you-rather/dan.jpg',
+    avatarURL: 'https://randomuser.me/api/portraits/lego/8.jpg',
     answers: {
       xj352vofupe1dqz9emx13r: 'optionOne',
       vthrdm985a262al8qx3do: 'optionTwo',
@@ -142,9 +142,43 @@ function formatQuestion({ optionOneText, optionTwoText, author }) {
   };
 }
 
+function formatUser({
+  userName,
+  avatarURL = 'https://randomuser.me/api/portraits/lego/6.jpg'
+}) {
+  return {
+    id: userName
+      .toLowerCase()
+      .split(' ')
+      .join(''),
+    name: userName
+      .split(' ')
+      .map(e => e[0].toUpperCase() + e.slice(1))
+      .join(' '),
+    avatarURL,
+    answers: {},
+    questions: []
+  };
+}
+
 export function _getUsers() {
   return new Promise((res, rej) => {
     setTimeout(() => res({ ...users }), 1000);
+  });
+}
+
+export function _saveUser(user) {
+  return new Promise((res, rej) => {
+    const formattedUser = formatUser(user);
+
+    setTimeout(() => {
+      users = {
+        ...users,
+        [formattedUser.id]: formattedUser
+      };
+
+      res(formattedUser);
+    }, 1000);
   });
 }
 
@@ -169,7 +203,9 @@ export function _saveQuestion(question) {
         ...users,
         [authedUser]: {
           ...users[authedUser],
-          questions: users[authedUser].questions.concat([formattedQuestion.id])
+          questions: [
+            ...users[authedUser].questions.concat([formattedQuestion.id])
+          ]
         }
       };
 

@@ -1,4 +1,5 @@
 import {
+  _saveUser,
   _getUsers,
   _getQuestions,
   _saveQuestion,
@@ -12,6 +13,10 @@ export const getInitialData = () => {
       questions
     })
   );
+};
+
+export const saveUser = user => {
+  return _saveUser(user);
 };
 
 export const saveQuestion = question => {
