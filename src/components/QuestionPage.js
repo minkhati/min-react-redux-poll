@@ -41,6 +41,8 @@ class QuestionPage extends Component {
     const { question } = this.props;
     const { selectedOption, toAnswer } = this.state;
 
+    const enabled = selectedOption;
+
     if (question === null) {
       return <p>This Question does not exist</p>;
     }
@@ -52,12 +54,18 @@ class QuestionPage extends Component {
     }
 
     return (
-      <form className="question" onSubmit={this.handleSubmit}>
-        <p>{name} asks:</p>
-        <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
-        <div className="question-info">
-          <div>
-            <label>Would You Rather ...</label>
+      <form
+        className="new-question"
+        style={{ padding: 0 }}
+        onSubmit={this.handleSubmit}
+      >
+        <span className="question-page-heading">{name} asks:</span>
+        <div className="div-que-avatar">
+          <div className="div-avatar">
+            <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
+          </div>
+          <div className="div-question">
+            <p className="active">Would you rather ...</p>
             <div>
               <p>
                 <label>
@@ -82,9 +90,10 @@ class QuestionPage extends Component {
                 </label>
               </p>
             </div>
+            <button className="btn" disabled={!enabled}>
+              Submit
+            </button>
           </div>
-
-          <button className="btn">Submit</button>
         </div>
       </form>
     );

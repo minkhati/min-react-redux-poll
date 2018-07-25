@@ -15,19 +15,19 @@ class Question extends Component {
     const { name, id, optionOne, avatar, hasAnswered } = question;
 
     return (
-      <Link
-        to={hasAnswered === false ? `/question/${id}` : `/answer/${id}`}
-        className="question"
-      >
-        <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
-        <div className="question-info">
-          <div>
-            <span className="center">{name} asks:</span>
-            <p>...{optionOne.text}...</p>
+      <Link to={hasAnswered === false ? `/question/${id}` : `/answer/${id}`}>
+        <span className="question-heading">{name} asks:</span>
+        <div className="div-que-avatar">
+          <div className="div-avatar">
+            <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
           </div>
-          <button className="btn" onClick={this.handlePoll}>
-            View Poll
-          </button>
+          <div className="div-question">
+            <p className="active">Would you rather</p>
+            <p>...{optionOne.text}...</p>
+            <button className="btn" onClick={this.handlePoll}>
+              View Poll
+            </button>
+          </div>
         </div>
       </Link>
     );

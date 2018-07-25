@@ -12,7 +12,6 @@ class NewQuestion extends Component {
 
   handleChangeOne = e => {
     const optionOneText = e.target.value;
-
     this.setState(() => ({
       optionOneText
     }));
@@ -20,7 +19,6 @@ class NewQuestion extends Component {
 
   handleChangeTwo = e => {
     const optionTwoText = e.target.value;
-
     this.setState(() => ({
       optionTwoText
     }));
@@ -35,47 +33,46 @@ class NewQuestion extends Component {
     dispatch(handleAddQuestion(optionOneText, optionTwoText));
 
     this.setState(() => ({
-      optionOneText: '',
-      optionTwoText: '',
+      // optionOneText: '',
+      // optionTwoText: '',
       toHome: id ? false : true
     }));
   };
 
   render() {
     const { optionOneText, optionTwoText, toHome } = this.state;
+    const enabled = optionOneText.length > 0 && optionTwoText.length > 0;
 
     if (toHome === true) {
       return <Redirect to="/" />;
     }
 
     return (
-      <div>
-        <h3 className="center">Create New Question</h3>
-        <form className="new-question" onSubmit={this.handleSubmit}>
-          <span>Complete the question:</span>
+      <div className="new-question">
+        <div className="page-heading">
+          <h3 className="center">Create New Question </h3>
+        </div>
+        <form className="form-question" onSubmit={this.handleSubmit}>
+          <p>Complete the question:</p>
           <h4>Would you rather ...</h4>
           <input
+            className="question-option"
             type="text"
             placeholder="Enter Option One Text Here"
             value={optionOneText}
             onChange={this.handleChangeOne}
-            className="text"
             maxLength={80}
           />
           <h3 className=" center">OR</h3>
           <input
+            className="question-option"
             type="text"
             placeholder="Enter Option Two Text Here"
             value={optionTwoText}
             onChange={this.handleChangeTwo}
-            className="text"
             maxLength={80}
           />
-          <button
-            className="btn"
-            type="submit"
-            disabled={optionOneText === '' && optionTwoText === ''}
-          >
+          <button className="btn" type="submit" disabled={!enabled}>
             Submit
           </button>
         </form>

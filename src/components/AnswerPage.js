@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formatQuestion } from '../utils/helpers';
+import { Line, Circle } from 'rc-progress';
 
 class AnswerPage extends Component {
   render() {
@@ -18,30 +19,60 @@ class AnswerPage extends Component {
     const optionOneTotalVotes = question.optionOne.votes.length;
     const optionTwoTotalVotes = question.optionTwo.votes.length;
 
-    const totalVotes = optionOneTotalVotes + optionTwoTotalVotes;
+    const totalVotes = optionOneTotalVotes + optionTwoTotalVotes || 1;
+
+    const optionOnePercent = Math.floor(optionOneTotalVotes / totalVotes * 100);
+    const optionTwoPercent = Math.floor(optionTwoTotalVotes / totalVotes * 100);
 
     return (
-      <div className="question">
-        <p>Asked by {name} </p>
-        <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
-        <div className="question-info">
-          <div>
-            <label>Results:</label>
-            <div>
-              <div>
-                {optionOneAnswered === true ? (
-                  <div className="your-vote">Your vote</div>
-                ) : null}
-                <p>{optionOne.text}</p>
-                <p>{`${optionOneTotalVotes} of ${totalVotes}`}</p>
-              </div>
-              <div>
-                {optionTwoAnswered === true ? (
-                  <div className="your-vote">Your vote</div>
-                ) : null}
-                <p>{optionTwo.text}</p>
-                <p>{`${optionTwoTotalVotes} of ${totalVotes}`}</p>
-              </div>
+      <div className="new-question" style={{ padding: 0 }}>
+        <span className="question-page-heading">Asked by {name}</span>
+        <div className="div-que-avatar">
+          <div className="div-ans-avatar">
+            <img
+              src={avatar}
+              alt={`Avatar of ${name}`}
+              className="avatar-answer"
+            />
+          </div>
+
+          <div className="div-question">
+            <p className="active">Results:</p>
+            <div className="ans-option">
+              {optionOneAnswered === true ? (
+                <div className="your-vote">Your vote</div>
+              ) : null}
+              <span style={{ marginRight: '20px' }}>{`Would you rather be ${
+                optionOne.text
+              }?`}</span>
+              <Line
+                style={{ marginTop: '20px' }}
+                percent={optionOnePercent}
+                strokeWidth="8"
+                strokeColor="green"
+              />
+              <p
+                className="center"
+                style={{ fontWeight: 'bold', color: 'black' }}
+              >{`${optionOneTotalVotes} out of ${totalVotes}`}</p>
+            </div>
+            <div className="ans-option">
+              {optionTwoAnswered === true ? (
+                <div className="your-vote">Your vote</div>
+              ) : null}
+              <span style={{ marginRight: '20px' }}>{`Would you rather be ${
+                optionTwo.text
+              }?`}</span>
+              <Line
+                style={{ marginTop: '20px' }}
+                percent={optionTwoPercent}
+                strokeWidth="8"
+                strokeColor="green"
+              />
+              <p
+                className="center bold"
+                style={{ fontWeight: 'bold', color: 'black' }}
+              >{`${optionTwoTotalVotes} out of ${totalVotes}`}</p>
             </div>
           </div>
         </div>

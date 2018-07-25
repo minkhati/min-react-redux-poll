@@ -22,9 +22,13 @@ class LeaderBoard extends Component {
 }
 
 function mapStateToProps({ authedUser, users, questions }) {
-  const userIds = Object.keys(users).sort(
-    (a, b) => users[b].timestamp - users[a].timestamp
-  );
+  const userIds = Object.keys(users)
+    .sort((a, b) => users[b].questions.length - users[a].questions.length)
+    .sort(
+      (a, b) =>
+        Object.keys(users[b].answers).length -
+        Object.keys(users[a].answers).length
+    );
 
   return {
     userIds

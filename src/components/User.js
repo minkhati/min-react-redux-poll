@@ -15,17 +15,23 @@ class User extends Component {
     const totalScore = totalAnswered + totalQuestionCreated;
 
     return (
-      <div className="question">
-        <img src={avatarURL} alt={`Avatar of ${name}`} className="avatar" />
-        <div className="question-info">
-          <div>
-            <span className="center bold">{name}</span>
+      <div
+        className="new-question"
+        style={{ padding: 0, marginBottom: '10px' }}
+      >
+        <span className="question-page-heading">{name}</span>
+        <div className="div-que-avatar">
+          <div className="div-avatar">
+            <img src={avatarURL} alt={`Avatar of ${name}`} className="avatar" />
+          </div>
+          <div className="div-question">
             <p>Answered Questions: {totalAnswered}</p>
             <p>Created Questions: {totalQuestionCreated}</p>
           </div>
-          <div>
-            <span className="center bold">Score</span>
-            <p>{totalScore}</p>
+          <div className="center div-avatar">
+            <p className="score-text">Score</p>
+            <hr />
+            <p className="score">{totalScore}</p>
           </div>
         </div>
       </div>
