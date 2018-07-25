@@ -27,29 +27,35 @@ class DashBoard extends Component {
         : formattedUnAnsweredQuestion;
 
     return (
-      <div>
-        <p className="center" style={{ maxHeight: 50 }}>
+      <div className="new-question">
+        <div className="page-heading" style={{ maxHeight: 50 }}>
           <button
-            className={answeredQuestion === false ? 'btn active' : 'btn'}
+            className={
+              answeredQuestion === false
+                ? 'option-active btn-option'
+                : 'btn-option'
+            }
             value="unanswered"
             onClick={this.handleButtonClick}
           >
             Unanswered Questions
           </button>
           <button
-            className={answeredQuestion === true ? 'btn active' : 'btn'}
+            className={
+              answeredQuestion === true
+                ? ' option-active btn-option'
+                : 'btn-option'
+            }
             value="answered"
             onClick={this.handleButtonClick}
           >
             Answered Questions
           </button>
-        </p>
-        <ul className="dashboard-list">
+        </div>
+        <ul>
           {questionsToMap.map(question => (
             <li key={question.id}>
-              <div>
-                <Question id={question.id} />
-              </div>
+              <Question id={question.id} />
             </li>
           ))}
         </ul>

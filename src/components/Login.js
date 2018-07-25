@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 import 'react-select/dist/react-select.css';
 import { setAuthedUser } from '../actions/authedUser';
+import logo from '../utils/logo.svg';
 
 class Login extends Component {
   state = {
@@ -35,13 +36,16 @@ class Login extends Component {
     }));
 
     return (
-      <div>
-        <div className="page-heading">
+      <div className="new-question">
+        <div className="page-heading" style={{ display: 'block' }}>
           <h3 className="center">Welcome to the Would You Rather App!</h3>
           <h4 className="center">Please sign in to continue</h4>
         </div>
-        <form className="new-question" onSubmit={this.handleSubmit}>
-          <label className="center">Sign in</label>
+        <img src={logo} className="App-logo" alt="logo" />
+        <form className="form-question" onSubmit={this.handleSubmit}>
+          <h2 className="center" style={{ color: '#009688' }}>
+            Sign in
+          </h2>
           <Select
             id="user-select"
             ref={ref => {
