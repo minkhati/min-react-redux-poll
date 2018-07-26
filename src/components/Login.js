@@ -6,44 +6,49 @@ import { setAuthedUser } from '../actions/authedUser';
 import { handleAddUser } from '../actions/users';
 import logo from '../utils/logo.svg';
 
+const defaultState = {
+  disabled: false,
+  userName: '',
+  clearable: true,
+  rtl: false
+};
+
 class Login extends Component {
-  state = {
-    disabled: false,
-    userName: '',
-    clearable: true,
-    rtl: false
-  };
+  state = defaultState;
 
   clearValue = e => {
     this.select.setInputValue('');
   };
 
   updateValue = newValue => {
-    const { dispatch } = this.props;
+    const { authedUser } = this.props;
+
     this.setState({
+      ...defaultState,
       userName: newValue
     });
 
-    dispatch(setAuthedUser(newValue));
+    authedUser(newValue);
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
     const userName = this.userName.value;
-    const { dispatch } = this.props;
+    const { addUser } = this.props;
+
     if (userName.length > 0) {
-      dispatch(handleAddUser(userName));
+      addUser(userName);
+    } else {
+      alert("User Name can't be blank");
+      return;
     }
-    alert("User Name can't be blank");
   };
 
   render() {
-    const { userName } = this.state;
     const { users } = this.props;
-    const userIds = Object.keys(users);
 
-    const enabled = userName.length > 0;
+    const userIds = Object.keys(users);
 
     const options = userIds.map(id => ({
       value: users[id].id,
@@ -52,21 +57,17 @@ class Login extends Component {
 
     return (
       <div className="new-question">
-        <div className="page-heading" style={{ flexDirection: 'column' }}>
+        <div className="page-heading-login">
           <h3 className="center">Welcome to the Would You Rather App!</h3>
           <h4 className="center">Please sign in to continue</h4>
         </div>
         <img src={logo} className="App-logo" alt="logo" />
         <div className="form-question">
-          <div
-            className="center"
-            style={{ color: '#009688', marginBottom: '10px' }}
-          >
-            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>
-              Sign in
-            </span>
+          <div className="sign-in-div">
+            <span className="sign-in-span">Sign in</span>
             <p>(for exisiting users)</p>
           </div>
+
           <Select
             id="user-select"
             ref={ref => {
@@ -84,9 +85,7 @@ class Login extends Component {
           />
         </div>
         <div>
-          <h2 className="center" style={{ color: '#009688' }}>
-            Create New User
-          </h2>
+          <h2 className="sign-in-span">Create New User</h2>
 
           <form className="form-question" onSubmit={this.handleSubmit}>
             <input
@@ -107,9 +106,17 @@ class Login extends Component {
   }
 }
 
-function mapStateToProps({ users }) {
+const mapStateToProps = ({ users }) => {
   return {
     users
   };
-}
-export default connect(mapStateToProps)(Login);
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addUser: (...args) => dispatch(handleAddUser(...args)),
+    authedUser: (...args) => dispatch(setAuthedUser(...args))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

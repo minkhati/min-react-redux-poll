@@ -6,18 +6,20 @@ import {
 
 export default function questions(state = {}, action) {
   switch (action.type) {
-    case FETCH_QUESTIONS:
+    case FETCH_QUESTIONS: {
       return {
         ...state,
         ...action.questions
       };
-    case ADD_QUESTION:
+    }
+    case ADD_QUESTION: {
       const { question } = action;
       return {
         ...state,
         [question.id]: question
       };
-    case QUESTION_ANSWER:
+    }
+    case QUESTION_ANSWER: {
       const { qid, answer, authedUser } = action;
 
       return {
@@ -30,7 +32,9 @@ export default function questions(state = {}, action) {
           }
         }
       };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }

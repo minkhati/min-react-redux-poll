@@ -24,3 +24,36 @@ export function formatQuestion(question, author, authedUser) {
     hasAnswered
   };
 }
+
+export function formatAllQuestions(formattedQuestions) {
+  const formattedAnsweredQuestion = formattedQuestions
+    .filter(question => question.hasAnswered === true)
+    .sort((a, b) => b.timestamp - a.timestamp);
+
+  const formattedUnAnsweredQuestion = formattedQuestions
+    .filter(question => question.hasAnswered === false)
+    .sort((a, b) => b.timestamp - a.timestamp);
+
+  return {
+    formattedAnsweredQuestion,
+    formattedUnAnsweredQuestion
+  };
+}
+
+export function computeStats(question) {
+  const optionOneTotalVotes = question.optionOne.votes.length;
+  const optionTwoTotalVotes = question.optionTwo.votes.length;
+
+  const totalVotes = optionOneTotalVotes + optionTwoTotalVotes || 1;
+
+  const optionOnePercent = Math.floor(optionOneTotalVotes / totalVotes * 100);
+  const optionTwoPercent = Math.floor(optionTwoTotalVotes / totalVotes * 100);
+
+  return {
+    totalVotes,
+    optionOneTotalVotes,
+    optionTwoTotalVotes,
+    optionOnePercent,
+    optionTwoPercent
+  };
+}

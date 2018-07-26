@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Question from './Question';
-import { formatQuestion } from '../utils/helpers';
+import DashBoardButton from './DashBoardButton';
+import { formatQuestion, formatAllQuestions } from '../utils/helpers';
 
 class DashBoard extends Component {
   state = {
@@ -16,6 +17,7 @@ class DashBoard extends Component {
 
   render() {
     const { answeredQuestion } = this.state;
+
     const {
       formattedAnsweredQuestion,
       formattedUnAnsweredQuestion
@@ -28,29 +30,20 @@ class DashBoard extends Component {
 
     return (
       <div className="new-question">
-        <div className="page-heading" style={{ maxHeight: 50 }}>
-          <button
-            className={
-              answeredQuestion === false
-                ? 'option-active btn-option'
-                : 'btn-option'
-            }
-            value="unanswered"
-            onClick={this.handleButtonClick}
-          >
-            Unanswered Questions
-          </button>
-          <button
-            className={
-              answeredQuestion === true
-                ? ' option-active btn-option'
-                : 'btn-option'
-            }
-            value="answered"
-            onClick={this.handleButtonClick}
-          >
-            Answered Questions
-          </button>
+        <div className="page-heading-dashboard">
+          <DashBoardButton
+            answeredQuestion={answeredQuestion}
+            value={'unanswered'}
+            handleClick={this.handleButtonClick}
+            BtnText={'Unanswered Questions'}
+          />
+
+          <DashBoardButton
+            answeredQuestion={!answeredQuestion}
+            value={'answered'}
+            handleClick={this.handleButtonClick}
+            BtnText={'Answered Questions'}
+          />
         </div>
         <ul>
           {questionsToMap.map(question => (
@@ -73,13 +66,10 @@ function mapStateToProps({ authedUser, users, questions }) {
     formatQuestion(questions[id], users[questions[id].author], authedUser)
   );
 
-  const formattedAnsweredQuestion = formattedQuestions
-    .filter(question => question.hasAnswered === true)
-    .sort((a, b) => b.timestamp - a.timestamp);
-
-  const formattedUnAnsweredQuestion = formattedQuestions
-    .filter(question => question.hasAnswered === false)
-    .sort((a, b) => b.timestamp - a.timestamp);
+  const {
+    formattedAnsweredQuestion,
+    formattedUnAnsweredQuestion
+  } = formatAllQuestions(formattedQuestions);
 
   return {
     questionIds,

@@ -7,18 +7,20 @@ import {
 
 export default function users(state = {}, action) {
   switch (action.type) {
-    case FETCH_USERS:
+    case FETCH_USERS: {
       return {
         ...state,
         ...action.users
       };
-    case ADD_USER:
+    }
+    case ADD_USER: {
       const { user } = action;
       return {
         ...state,
         [user.id]: user
       };
-    case ADD_QUESTION:
+    }
+    case ADD_QUESTION: {
       const { id, author } = action.question;
       return {
         ...state,
@@ -27,7 +29,8 @@ export default function users(state = {}, action) {
           questions: [...state[author].questions.concat([id])]
         }
       };
-    case QUESTION_ANSWER:
+    }
+    case QUESTION_ANSWER: {
       const { qid, answer, authedUser } = action;
 
       return {
@@ -40,8 +43,9 @@ export default function users(state = {}, action) {
           }
         }
       };
-
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }

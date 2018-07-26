@@ -2,45 +2,44 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { handleAddQuestion } from '../actions/questions';
+import QuestionInput from './QuestionInput';
+
+const defaultState = {
+  optionOneText: '',
+  optionTwoText: '',
+  toHome: false
+};
 
 class NewQuestion extends Component {
-  state = {
-    optionOneText: '',
-    optionTwoText: '',
-    toHome: false
-  };
+  state = defaultState;
 
   handleChangeOne = e => {
     const optionOneText = e.target.value;
-    this.setState(() => ({
-      optionOneText
-    }));
+    this.setState({ optionOneText });
   };
 
   handleChangeTwo = e => {
     const optionTwoText = e.target.value;
-    this.setState(() => ({
-      optionTwoText
-    }));
+    this.setState({ optionTwoText });
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
     const { optionOneText, optionTwoText } = this.state;
-    const { dispatch, id } = this.props;
+    const { addQuestion, id } = this.props;
 
-    dispatch(handleAddQuestion(optionOneText, optionTwoText));
+    addQuestion(optionOneText, optionTwoText);
 
     this.setState(() => ({
-      // optionOneText: '',
-      // optionTwoText: '',
+      ...defaultState,
       toHome: id ? false : true
     }));
   };
 
   render() {
     const { optionOneText, optionTwoText, toHome } = this.state;
+
     const enabled = optionOneText.length > 0 && optionTwoText.length > 0;
 
     if (toHome === true) {
@@ -52,25 +51,20 @@ class NewQuestion extends Component {
         <div className="page-heading">
           <h3 className="center">Create New Question </h3>
         </div>
+
         <form className="form-question" onSubmit={this.handleSubmit}>
           <p>Complete the question:</p>
           <h4>Would you rather ...</h4>
-          <input
-            className="question-option"
-            type="text"
-            placeholder="Enter Option One Text Here"
-            value={optionOneText}
-            onChange={this.handleChangeOne}
-            maxLength={80}
+          <QuestionInput
+            option={'One'}
+            optionText={optionOneText}
+            handleChange={this.handleChangeOne}
           />
           <h3 className=" center">OR</h3>
-          <input
-            className="question-option"
-            type="text"
-            placeholder="Enter Option Two Text Here"
-            value={optionTwoText}
-            onChange={this.handleChangeTwo}
-            maxLength={80}
+          <QuestionInput
+            option={'Two'}
+            optionText={optionTwoText}
+            handleChange={this.handleChangeTwo}
           />
           <button className="btn" type="submit" disabled={!enabled}>
             Submit
@@ -81,4 +75,10 @@ class NewQuestion extends Component {
   }
 }
 
-export default connect()(NewQuestion);
+const mapDispatchToProps = dispatch => {
+  return {
+    addQuestion: (...args) => dispatch(handleAddQuestion(...args))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(NewQuestion);

@@ -1,38 +1,40 @@
-import React, { Component, input } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { formatQuestion } from '../utils/helpers';
 import { handleAddQuestionAnswer } from '../actions/questions';
+import QuestionRadioInput from './QuestionRadioInput';
+
+const defaultState = {
+  selectedOption: '',
+  toAnswer: false
+};
 
 class QuestionPage extends Component {
-  state = {
-    selectedOption: '',
-    toAnswer: false
-  };
+  state = defaultState;
 
   handleSubmit = e => {
     e.preventDefault();
 
-    const { dispatch, question, authedUser } = this.props;
+    const { addQuestionAnswer, question, authedUser } = this.props;
     const answer = this.state.selectedOption;
 
-    dispatch(
-      handleAddQuestionAnswer({
-        qid: question.id,
-        question,
-        answer,
-        authedUser
-      })
-    );
+    addQuestionAnswer({
+      qid: question.id,
+      question,
+      answer,
+      authedUser
+    });
 
-    this.setState(() => ({
-      //selectedOption: '',
+    this.setState({
+      ...defaultState,
       toAnswer: true
-    }));
+    });
   };
 
   handleOptionChange = e => {
     this.setState({
+      ...defaultState,
       selectedOption: e.target.value
     });
   };
@@ -67,28 +69,19 @@ class QuestionPage extends Component {
           <div className="div-question">
             <p className="active">Would you rather ...</p>
             <div>
-              <p>
-                <label>
-                  <input
-                    type="radio"
-                    value="optionOne"
-                    checked={selectedOption === 'optionOne'}
-                    onChange={this.handleOptionChange}
-                  />{' '}
-                  {optionOne.text}
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input
-                    type="radio"
-                    value="optionTwo"
-                    checked={selectedOption === 'optionTwo'}
-                    onChange={this.handleOptionChange}
-                  />{' '}
-                  {optionTwo.text}
-                </label>
-              </p>
+              <QuestionRadioInput
+                handleChange={this.handleOptionChange}
+                optionText={optionOne.text}
+                option={'optionOne'}
+                selectedOption={selectedOption}
+              />
+
+              <QuestionRadioInput
+                handleChange={this.handleOptionChange}
+                optionText={optionTwo.text}
+                option={'optionTwo'}
+                selectedOption={selectedOption}
+              />
             </div>
             <button className="btn" disabled={!enabled}>
               Submit
@@ -113,4 +106,10 @@ function mapStateToProps({ authedUser, questions, users }, props) {
   };
 }
 
-export default connect(mapStateToProps)(QuestionPage);
+const mapDispatchToProps = dispatch => {
+  return {
+    addQuestionAnswer: (...args) => dispatch(handleAddQuestionAnswer(...args))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionPage);
